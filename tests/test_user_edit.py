@@ -97,7 +97,7 @@ class TestUserEdit(BaseCase, Assertions):
 
         password_user1 = register_data_user1['password']
 
-        # Register user 2
+        # Register user2
         register_data_user2 = self.prepare_registration_data()
 
         response_register_user2 = requests.post("https://playground.learnqa.ru/api/user/",
