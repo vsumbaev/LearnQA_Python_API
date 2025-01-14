@@ -1,6 +1,8 @@
 import requests
 import pytest
 import json
+from lib.my_requests import MyRequests
+
 
 class TestUserAgent:
     user_agents = [{'Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':['Mobile','No','Android']},
@@ -16,7 +18,7 @@ class TestUserAgent:
         # Get list with expected values from dict
         user_agent_value_list=list(user_agent.get(user_agent_key_value_str))
         # Get response 
-        headers = requests.get("https://playground.learnqa.ru/ajax/api/user_agent_check",
+        headers = MyRequests.get("user_agent_check",
                            headers={"User-Agent":user_agent_key_value_str}).text
         # Make list with values from response
         values_got_from_response = []

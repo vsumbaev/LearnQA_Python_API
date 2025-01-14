@@ -1,9 +1,9 @@
 import requests
+from lib.my_requests import MyRequests
 
 class TestMethodCookieEx11:
    def test_method_cookie_ex11(self):
-    URL = "https://playground.learnqa.ru/api/homework_cookie"
-    response = requests.get(URL)
+    response = MyRequests.get("homework_cookie")
     for i in response.cookies:
        cookie_name = i.name
        print(i.name)

@@ -1,6 +1,8 @@
 import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+from lib.my_requests import MyRequests
+
 
 
 class TestUserGet(BaseCase):
@@ -10,7 +12,7 @@ class TestUserGet(BaseCase):
             'password': '1234'
         }
 
-        response1  = requests.post("https://playground.learnqa.ru/api/user/login", data=data)
+        response1  = MyRequests.post("user/login", data=data)
 
         auth_sid = self.get_cookie(response1, "auth_sid")
         token = self.get_header(response1, "x-csrf-token")
@@ -18,7 +20,7 @@ class TestUserGet(BaseCase):
         return auth_sid,token,user_id_from_auth_method
 
     def test_get_user_details_not_auth(self):
-        response = requests.get("https://playground.learnqa.ru/api/user/2")
+        response = MyRequests.get("user/2")
         
         Assertions.assert_json_has_key(response, "username")
         Assertions.assert_json_has_no_key(response, "email")
@@ -30,7 +32,7 @@ class TestUserGet(BaseCase):
 
         auth_sid, token, user_id_from_auth_method = self.user_auth_by_user()
 
-        response = requests.get(f"https://playground.learnqa.ru/api/user/{user_id_from_auth_method}",
+        response = MyRequests.get(f"user/{user_id_from_auth_method}",
                                  headers={'x-csrf-token': token},
                                  cookies={'auth_sid':auth_sid})
         
@@ -43,7 +45,7 @@ class TestUserGet(BaseCase):
 
         auth_sid, token, user_id_from_auth_method = self.user_auth_by_user()
 
-        response = requests.get(f"https://playground.learnqa.ru/api/user/1",
+        response = MyRequests.get(f"user/1",
                                  headers={'x-csrf-token': token},
                                  cookies={'auth_sid':auth_sid})
         

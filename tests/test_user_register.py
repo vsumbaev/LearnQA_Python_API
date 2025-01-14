@@ -1,6 +1,7 @@
 import requests
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
+from lib.my_requests import MyRequests
 import pytest
 import random
 import string
@@ -47,7 +48,7 @@ class TestUserRegister(BaseCase):
     def test_create_user_successfully(self):
         data = self.prepare_registration_data()
 
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                   data=data)
         
         Assertions.assert_code_status(response, 200)
@@ -58,7 +59,7 @@ class TestUserRegister(BaseCase):
         email = 'vinkotov@example.com'
         data = self.prepare_registration_data(email)
 
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                   data=data)
         
         Assertions.assert_code_status(response, 400)
@@ -67,7 +68,7 @@ class TestUserRegister(BaseCase):
 
     def test_make_user_with_incorrect_email(self):
         self.make_user_data['email'] = 'learnqa'
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                   data=self.make_user_data)
         
         Assertions.assert_response_content(response, "Invalid email format")
@@ -79,7 +80,7 @@ class TestUserRegister(BaseCase):
         
         # Get dict data for request from arg 
         make_user_empty_field = next(iter(make_user_empty_fields.values()))
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                  data=make_user_empty_field)
         
         # Get empty value for assert
@@ -95,7 +96,7 @@ class TestUserRegister(BaseCase):
         self.make_user_data['username'] = random_symbol
 
         # Make request
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                   data=self.make_user_data)
 
         Assertions.assert_response_content(response, "The value of 'username' field is too short")
@@ -108,7 +109,7 @@ class TestUserRegister(BaseCase):
         self.make_user_data['username'] = random_username
 
         # Make request
-        response = requests.post("https://playground.learnqa.ru/api/user/",
+        response = MyRequests.post("user/",
                                   data=self.make_user_data)
         
         Assertions.assert_response_content(response, "The value of 'username' field is too long")
