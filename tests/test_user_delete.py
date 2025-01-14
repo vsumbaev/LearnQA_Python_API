@@ -2,6 +2,7 @@ from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 import allure
+import time
 
 @allure.epic("Deletion cases")
 class TestUserDelete(BaseCase, MyRequests):
@@ -91,6 +92,8 @@ class TestUserDelete(BaseCase, MyRequests):
 
         # Register user 2
         register_data_user2 = self.prepare_registration_data()
+
+        time.sleep(5)
 
         response_register_user2 = MyRequests.post("user/", data=register_data_user2)
         
