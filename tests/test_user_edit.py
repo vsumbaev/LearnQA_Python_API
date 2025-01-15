@@ -4,9 +4,11 @@ from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 import random
 import string
+import allure
 
-
+@allure.epic("User edit cases")
 class TestUserEdit(BaseCase, Assertions):
+    @allure.description("This test edit just created user")
     def test_edit_just_created_user(self):
 
         # Register
@@ -60,7 +62,7 @@ class TestUserEdit(BaseCase, Assertions):
         
         Assertions.assert_json_value_by_name(response_get, "firstName", new_name, "Wrong name of the user after edit")
 
-
+    @allure.description("This test edit no authorized user")
     def test_edit_no_authorized_user_ex17(self):
         
         # Register
@@ -83,7 +85,7 @@ class TestUserEdit(BaseCase, Assertions):
         Assertions.assert_code_status(response_edit, 400)
         Assertions.assert_response_content(response_edit, '{"error":"Auth token not supplied"}')
 
-    
+    @allure.description("This test edit by another authorized user")    
     def test_edit_by_another_user_authorized_ex17(self):
         # Register user1
         register_data_user1 = self.prepare_registration_data()
@@ -135,7 +137,7 @@ class TestUserEdit(BaseCase, Assertions):
         Assertions.assert_code_status(response_edit, 400)
         Assertions.assert_response_content(response_edit, '{"error":"This user can only edit their own data."}')
 
-
+    @allure.description("This test edit email created user")
     def test_edit_email_just_created_user_ex17(self):
 
         # Register
@@ -183,7 +185,7 @@ class TestUserEdit(BaseCase, Assertions):
         Assertions.assert_code_status(response_edit, 400)
         Assertions.assert_response_content(response_edit, '{"error":"Invalid email format"}')
 
-
+    @allure.description("This test edit first name created user")
     def test_edit_short_fisrt_name_just_created_user_ex17(self):
 
         # Register

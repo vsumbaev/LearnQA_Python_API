@@ -6,7 +6,12 @@ import time
 
 @allure.epic("Deletion cases")
 class TestUserDelete(BaseCase, MyRequests):
+
     @allure.description("This test delete user with id 2")
+    @allure.title("Проверка удаления юзера c id 2")
+    @allure.id("1")
+    @allure.label("component", "API tests")
+    @allure.issue("Ex18: Тесты на DELETE")
     def test_user_id_2_delete_ex18(self):
         login_data = {
             'email': 'vinkotov@example.com',
@@ -29,6 +34,10 @@ class TestUserDelete(BaseCase, MyRequests):
         Assertions.assert_response_content(response_delete, '{"error":"Please, do not delete test users with ID 1, 2, 3, 4 or 5."}')
     
     @allure.description("This test successfully deletes the created user.")
+    @allure.title("Проверка удаления юзера")
+    @allure.id("2")
+    @allure.label("component", "API tests")
+    @allure.issue("Ex18: Тесты на DELETE")
     def test_user_delete_ex18(self):
         # Register
         register_data = self.prepare_registration_data()
@@ -76,6 +85,10 @@ class TestUserDelete(BaseCase, MyRequests):
 
 
     @allure.description("This test try to delete created user2 by user1.")
+    @allure.title("Проверка удаления юзера дргуим юзером")
+    @allure.id("3")
+    @allure.label("component", "API tests")
+    @allure.issue("Ex18: Тесты на DELETE")
     def test_user_delete_another_user_ex18(self):
         # Register user1
         register_data_user1 = self.prepare_registration_data()

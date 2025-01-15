@@ -2,10 +2,11 @@ import requests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
+import allure
 
-
-
+@allure.epic("User get cases")
 class TestUserGet(BaseCase):
+    @allure.description("This test auth by user")
     def user_auth_by_user(self):
         data = {
             'email': 'vinkotov@example.com',
@@ -27,7 +28,7 @@ class TestUserGet(BaseCase):
         Assertions.assert_json_has_no_key(response, "firstName")
         Assertions.assert_json_has_no_key(response, "lastName")
 
-    
+    @allure.description("This test get details user")
     def test_get_user_details_as_same_user(self):
 
         auth_sid, token, user_id_from_auth_method = self.user_auth_by_user()
@@ -40,7 +41,7 @@ class TestUserGet(BaseCase):
 
         Assertions.assert_json_has_keys(response, expected_fields)
 
-
+    @allure.description("This test get details another user")
     def test_get_user_details_as_another_user(self):
 
         auth_sid, token, user_id_from_auth_method = self.user_auth_by_user()
